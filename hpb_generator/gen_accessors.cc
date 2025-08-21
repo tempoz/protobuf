@@ -673,5 +673,4 @@ std::string ResolveFieldName(const protobuf::FieldDescriptor* field,
   return ResolveKeywordConflict(field_name);
 }
 
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator

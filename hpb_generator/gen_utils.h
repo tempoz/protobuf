@@ -43,7 +43,6 @@ std::string ToCamelCase(absl::string_view input, bool lower_first);
 
 std::string DefaultValue(const FieldDescriptor* field);
 
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator
 
 #endif  // GOOGLE_PROTOBUF_COMPILER_HPB_GEN_UTILS_H__

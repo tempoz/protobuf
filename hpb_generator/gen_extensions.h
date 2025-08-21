@@ -21,7 +21,6 @@ void WriteExtensionIdentifiersHeader(
 void WriteExtensionIdentifierHeader(const protobuf::FieldDescriptor* ext,
                                     Context& ctx);
 
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator
 
 #endif  // GOOGLE_PROTOBUF_COMPILER_HPB_GEN_EXTENSIONS_H__

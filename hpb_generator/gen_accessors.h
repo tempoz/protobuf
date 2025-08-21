@@ -24,7 +24,6 @@ void WriteUsingAccessorsInHeader(const protobuf::Descriptor* desc,
                                  MessageClassType handle_type, Context& ctx);
 void WriteOneofAccessorsInHeader(const protobuf::Descriptor* desc,
                                  Context& ctx);
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator
 
 #endif  // GOOGLE_PROTOBUF_COMPILER_HPB_GEN_ACCESSORS_H__

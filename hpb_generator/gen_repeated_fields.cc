@@ -347,5 +347,4 @@ void WriteRepeatedScalarAccessor(const protobuf::Descriptor* desc,
   );
 }
 
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator

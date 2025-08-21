@@ -44,7 +44,6 @@ std::string MessageCProxyType(const protobuf::FieldDescriptor* field,
 std::string MessageProxyType(const protobuf::FieldDescriptor* field,
                              bool is_const);
 
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator
 
 #endif  // GOOGLE_PROTOBUF_COMPILER_HPB_NAMES_H__

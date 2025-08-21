@@ -39,7 +39,6 @@ class Generator : public protoc::CodeGenerator {
   }
 };
 
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator
 
 #endif  // GOOGLE_PROTOBUF_COMPILER_HPB_GENERATOR_H__

@@ -42,7 +42,6 @@ void WriteRepeatedScalarAccessor(const protobuf::Descriptor* message,
                                  absl::string_view resolved_field_name,
                                  absl::string_view class_name, Context& ctx);
 
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator
 
 #endif  // GOOGLE_PROTOBUF_COMPILER_HPB_GEN_REPEATED_FIELDS_H__

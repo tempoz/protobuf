@@ -22,7 +22,6 @@ std::string EnumValueSymbolInNameSpace(
 void WriteEnumDeclarations(
     const std::vector<const protobuf::EnumDescriptor*>& enums, Context& ctx);
 
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator
 
 #endif  // GOOGLE_PROTOBUF_COMPILER_HPB_GEN_ENUMS_H__

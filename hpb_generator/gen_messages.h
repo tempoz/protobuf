@@ -23,7 +23,6 @@ void WriteMessageImplementation(
     const protobuf::Descriptor* descriptor,
     const std::vector<const protobuf::FieldDescriptor*>& file_exts,
     Context& ctx);
-}  // namespace protobuf
-}  // namespace google::hpb_generator
+}  // namespace google::protobuf::hpb_generator
 
 #endif  // GOOGLE_PROTOBUF_COMPILER_HPB_GEN_MESSAGES_H__
