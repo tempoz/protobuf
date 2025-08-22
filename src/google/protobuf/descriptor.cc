@@ -7973,7 +7973,14 @@ void DescriptorBuilder::CrossLinkField(FieldDescriptor* field,
     // if weak fields exist or not so that we don't need to force building
     // weak dependencies. However the name lookup rules for symbols are
     // somewhat complicated, so I defer it too another CL.
-    bool is_weak = !pool_->enforce_weak_ && proto.options().weak();
+    bool is_weak = false;
+    if (!pool_->enforce_weak_) {
+      const auto& protoOptions = proto.options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+      is_weak = protoOptions.weak();
+#pragma GCC diagnostic pop
+    }
     bool is_lazy = pool_->lazily_build_dependencies_ && !is_weak;
 
     Symbol type =
@@ -10690,10 +10697,15 @@ bool HasPreservingUnknownEnumSemantics(const FieldDescriptor* field) {
 
 HasbitMode GetFieldHasbitModeWithoutProfile(const FieldDescriptor* field) {
   // Do not generate hasbits for "real-oneof", weak, or extension fields.
-  if (field->real_containing_oneof() || field->options().weak() ||
-      field->is_extension()) {
+  if (field->real_containing_oneof()) { return HasbitMode::kNoHasbit; }
+  const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  if (fieldOptions.weak()) {
+#pragma GCC diagnostic pop
     return HasbitMode::kNoHasbit;
   }
+  if ( field->is_extension()) { return HasbitMode::kNoHasbit; }
 
   // Explicit-presence fields always have true hasbits.
   if (field->has_presence()) {

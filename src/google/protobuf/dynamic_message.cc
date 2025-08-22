@@ -769,16 +769,22 @@ void DynamicMessage::CrossLinkPrototypes() {
   // Cross-link default messages.
   for (int i = 0; i < descriptor->field_count(); i++) {
     const FieldDescriptor* field = descriptor->field(i);
-    if (field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE &&
-        !field->options().weak() && !InRealOneof(field) &&
-        !field->is_repeated()) {
-      void* field_ptr = MutableRaw(i);
-      // For fields with message types, we need to cross-link with the
-      // prototype for the field's type.
-      // For singular fields, the field is just a pointer which should
-      // point to the prototype.
-      *reinterpret_cast<const Message**>(field_ptr) =
-          factory->GetPrototypeNoLock(field->message_type());
+    if (field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) {
+      const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+      if(!fieldOptions.weak()) {
+#pragma GCC diagnostic pop
+        if (!InRealOneof(field) && !field->is_repeated()) {
+          void* field_ptr = MutableRaw(i);
+          // For fields with message types, we need to cross-link with the
+          // prototype for the field's type.
+          // For singular fields, the field is just a pointer which should
+          // point to the prototype.
+          *reinterpret_cast<const Message**>(field_ptr) =
+              factory->GetPrototypeNoLock(field->message_type());
+        }
+      }
     }
   }
 }

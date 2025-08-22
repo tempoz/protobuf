@@ -106,7 +106,12 @@ void ReflectionVisit::VisitFields(MessageT& message, CallbackFn&& func,
 
   for (int i = 0; i < field_count; i++) {
     const FieldDescriptor* field = descriptor->field(i);
-    ABSL_DCHECK(!field->options().weak()) << "weak fields are not supported";
+    const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    const bool weak = fieldOptions.weak();
+#pragma GCC diagnostic pop
+    ABSL_DCHECK(!weak) << "weak fields are not supported";
 
     if (!ShouldVisit(mask, field->cpp_type())) continue;
 

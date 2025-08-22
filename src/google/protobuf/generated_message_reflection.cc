@@ -2452,11 +2452,18 @@ const Message* Reflection::GetDefaultMessageInstance(
   // instances to allow for this. But only do this for real fields.
   // This is an optimization to avoid going to GetPrototype() below, as that
   // requires a lock and a map lookup.
-  if (!field->is_extension() && !field->options().weak() &&
-      !IsLazyField(field) && !schema_.InRealOneof(field)) {
-    auto* res = DefaultRaw<const Message*>(field);
-    if (res != nullptr) {
-      return res;
+  if (!field->is_extension() ) {
+    const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    if (!fieldOptions.weak()) {
+#pragma GCC diagnostic pop
+      if (!IsLazyField(field) && !schema_.InRealOneof(field)) {
+        auto* res = DefaultRaw<const Message*>(field);
+        if (res != nullptr) {
+          return res;
+        }
+      }
     }
   }
   // Otherwise, just go to the factory.
@@ -3213,7 +3220,12 @@ bool Reflection::IsFieldPresentGivenHasbits(const Message& message,
 
 bool Reflection::HasFieldWithHasbits(const Message& message,
                                      const FieldDescriptor* field) const {
-  ABSL_DCHECK(!field->options().weak());
+  const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  const bool weak = fieldOptions.weak();
+#pragma GCC diagnostic pop
+  ABSL_DCHECK(!weak);
   ABSL_DCHECK(!field->is_extension());
   if (schema_.HasBitIndex(field) != static_cast<uint32_t>(kNoHasbit)) {
     return IsFieldPresentGivenHasbits(message, field, GetHasBits(message),
@@ -3246,7 +3258,12 @@ bool Reflection::HasFieldWithHasbits(const Message& message,
 
 void Reflection::SetHasBit(Message* message,
                            const FieldDescriptor* field) const {
-  ABSL_DCHECK(!field->options().weak());
+  const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  const bool weak = fieldOptions.weak();
+#pragma GCC diagnostic pop
+  ABSL_DCHECK(!weak);
   const uint32_t index = schema_.HasBitIndex(field);
   if (index == static_cast<uint32_t>(kNoHasbit)) return;
   MutableHasBits(message)[index / 32] |=
@@ -3255,7 +3272,12 @@ void Reflection::SetHasBit(Message* message,
 
 void Reflection::ClearHasBit(Message* message,
                              const FieldDescriptor* field) const {
-  ABSL_DCHECK(!field->options().weak());
+  const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  const bool weak = fieldOptions.weak();
+#pragma GCC diagnostic pop
+  ABSL_DCHECK(!weak);
   const uint32_t index = schema_.HasBitIndex(field);
   if (index == static_cast<uint32_t>(kNoHasbit)) return;
   MutableHasBits(message)[index / 32] &=
@@ -3264,7 +3286,12 @@ void Reflection::ClearHasBit(Message* message,
 
 void Reflection::NaiveSwapHasBit(Message* message1, Message* message2,
                                  const FieldDescriptor* field) const {
-  ABSL_DCHECK(!field->options().weak());
+  const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  const bool weak = fieldOptions.weak();
+#pragma GCC diagnostic pop
+  ABSL_DCHECK(!weak);
   if (!schema_.HasHasbits() ||
       schema_.HasBitIndex(field) == static_cast<uint32_t>(kNoHasbit)) {
     return;

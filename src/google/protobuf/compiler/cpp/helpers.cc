@@ -1813,7 +1813,11 @@ MessageAnalysis MessageSCCAnalyzer::GetSCCAnalysis(const SCC* scc) {
       if (field->is_required()) {
         result.contains_required = true;
       }
-      if (field->options().weak()) {
+      const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+      if (fieldOptions.weak()) {
+#pragma GCC diagnostic pop
         result.contains_weak = true;
       }
       switch (field->type()) {

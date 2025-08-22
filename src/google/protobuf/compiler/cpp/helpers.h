@@ -344,7 +344,11 @@ inline bool UseUnknownFieldSet(const FileDescriptor* file,
 }
 
 inline bool IsWeak(const FieldDescriptor* field, const Options& options) {
-  if (field->options().weak()) {
+  const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  if (fieldOptions.weak()) {
+#pragma GCC diagnostic pop
     ABSL_CHECK(!options.opensource_runtime);
     return true;
   }

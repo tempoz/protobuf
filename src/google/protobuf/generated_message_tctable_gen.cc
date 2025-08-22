@@ -696,7 +696,11 @@ uint16_t MakeTypeCardForField(
 
 bool HasWeakFields(const Descriptor* descriptor) {
   for (int i = 0; i < descriptor->field_count(); i++) {
-    if (descriptor->field(i)->options().weak()) {
+    const auto& descriptorFieldOptions = descriptor->field(i)->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    if (descriptorFieldOptions.weak()) {
+#pragma GCC diagnostic pop
       return true;
     }
   }
@@ -734,8 +738,12 @@ uint32_t FastParseTableSize(size_t num_fields,
 
 bool IsFieldTypeEligibleForFastParsing(const FieldDescriptor* field) {
   // Map, oneof, weak, and split fields are not handled on the fast path.
-  if (field->is_map() || field->real_containing_oneof() ||
-      field->options().weak()) {
+  if (field->is_map() || field->real_containing_oneof()) { return false; }
+  const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+  if (fieldOptions.weak()) {
+#pragma GCC diagnostic pop
     return false;
   }
 
@@ -769,10 +777,14 @@ TailCallTableInfo::BuildFieldEntries(
     // In the following code where we assign kSubTable to aux entries, only
     // the following typed fields are supported.
     return (field->type() == FieldDescriptor::TYPE_MESSAGE ||
-            field->type() == FieldDescriptor::TYPE_GROUP) &&
-           !field->is_map() && !field->options().weak() &&
-           !HasLazyRep(field, options) && !options.is_implicitly_weak &&
-           options.use_direct_tcparser_table && is_non_cold(options);
+            field->type() == FieldDescriptor::TYPE_GROUP) && !field->is_map() &&
+            ![&fieldOptions = std::as_const(field->options())]() {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+              return fieldOptions.weak();
+#pragma GCC diagnostic pop
+            }() && !HasLazyRep(field, options) && !options.is_implicitly_weak &&
+            options.use_direct_tcparser_table && is_non_cold(options);
   };
   for (const FieldOptions& options : ordered_fields) {
     if (is_non_cold_subtable(options)) {
@@ -810,7 +822,13 @@ TailCallTableInfo::BuildFieldEntries(
             aux_entries.push_back({kEnumValidator, {map_value}});
           }
         }
-      } else if (field->options().weak()) {
+      } else if ([&fieldOptions = std::as_const(field->options())]() {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+          const bool weak = fieldOptions.weak();
+#pragma GCC diagnostic pop
+          return weak;
+          }()) {
         // Disable the type card for this entry to force the fallback.
         entry.type_card = 0;
       } else if (HasLazyRep(field, options)) {

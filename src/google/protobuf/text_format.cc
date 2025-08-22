@@ -660,16 +660,23 @@ class TextFormat::Parser::ParserImpl {
       if (consumed_semicolon) {
         TryConsumeWhitespace();
       }
-      if (consumed_semicolon && field->options().weak() &&
-          LookingAtType(io::Tokenizer::TYPE_STRING)) {
-        // we are getting a bytes string for a weak field.
-        std::string tmp;
-        DO(ConsumeString(&tmp));
-        MessageFactory* factory =
-            finder_ ? finder_->FindExtensionFactory(field) : nullptr;
-        reflection->MutableMessage(message, field, factory)
-            ->ParseFromString(tmp);
-        return skip_parsing(true);
+      if (consumed_semicolon) {
+        const auto& fieldOptions = field->options();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        if (fieldOptions.weak()) {
+#pragma GCC diagnostic pop
+          if (LookingAtType(io::Tokenizer::TYPE_STRING)) {
+            // we are getting a bytes string for a weak field.
+            std::string tmp;
+            DO(ConsumeString(&tmp));
+            MessageFactory* factory =
+                finder_ ? finder_->FindExtensionFactory(field) : nullptr;
+            reflection->MutableMessage(message, field, factory)
+                ->ParseFromString(tmp);
+            return skip_parsing(true);
+          }
+        }
       }
     } else {
       // ':' is required here.
