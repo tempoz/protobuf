@@ -155,9 +155,9 @@ def protobuf_deps():
     if not native.existing_rule("rules_jvm_external"):
         http_archive(
             name = "rules_jvm_external",
-            strip_prefix = "rules_jvm_external-6.7",
-            sha256 = "a1e351607f04fed296ba33c4977d3fe2a615ed50df7896676b67aac993c53c18",
-            url = "https://github.com/bazelbuild/rules_jvm_external/releases/download/6.7/rules_jvm_external-6.7.tar.gz",
+            strip_prefix = "rules_jvm_external-6.8",
+            sha256 = "704a0197e4e966f96993260418f2542568198490456c21814f647ae7091f56f2",
+            url = "https://github.com/bazelbuild/rules_jvm_external/releases/download/6.8/rules_jvm_external-6.8.tar.gz",
         )
 
     if not native.existing_rule("rules_pkg"):
