@@ -3944,9 +3944,15 @@ void FieldDescriptor::DebugString(
       absl::StrCat(kLabelToName[static_cast<Label>(label_)], " ");
 
   // Label is omitted for maps, oneof, and plain proto3 fields.
-  if (is_map() || real_containing_oneof() ||
-      (!is_required() && !is_repeated() && !has_optional_keyword())) {
+  if (is_map() || real_containing_oneof()) {
     label.clear();
+  } else if (!is_required() && !is_repeated() ) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    if (!has_optional_keyword()) {
+#pragma GCC diagnostic pop
+      label.clear();
+    }
   }
   // Label is omitted for optional and required fields under editions.
   if (!is_repeated() && !IsLegacyEdition(file()->edition())) {
