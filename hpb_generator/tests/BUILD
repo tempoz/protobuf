@@ -150,7 +150,7 @@ hpb_proto_library(
 cc_test(
     name = "test_generated_cc_code",
     srcs = ["test_generated.cc"],
-    copts = UPB_DEFAULT_CPPOPTS,
+    copts = UPB_DEFAULT_CPPOPTS + ["-trigraphs"],
     deps = [
         # google_only_begin_legacy_marker
         ":legacy_name_test_proto",
