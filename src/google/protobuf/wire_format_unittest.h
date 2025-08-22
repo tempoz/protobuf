@@ -1635,8 +1635,12 @@ TYPED_TEST_P(Utf8ValidationTest, OldVerifyUTF8String) {
     EXPECT_CALL(log, Log(absl::LogSeverity::kError, testing::_, testing::_))
         .Times(0);
     log.StartCapturingLogs();
-    WireFormat::VerifyUTF8String(data.data(), data.size(),
-                                 WireFormat::SERIALIZE);
+    const auto& dataData = data.data();
+    const auto& dataSize = data.size();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    WireFormat::VerifyUTF8String(dataData, dataSize, WireFormat::SERIALIZE);
+#pragma GCC diagnostic pop
   }
 }
 
