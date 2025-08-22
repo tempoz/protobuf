@@ -1169,7 +1169,7 @@
     ]
   },
   "repositories": {
-    "https://repo1.maven.org/maven2/": [
+    "https://repo.maven.apache.org/maven2/": [
       "biz.aQute.bnd:biz.aQute.bnd.util",
       "biz.aQute.bnd:biz.aQute.bndlib",
       "com.google.auto.value:auto-value-annotations",
@@ -1227,7 +1227,7 @@
       "org.slf4j:slf4j-api",
       "org.yaml:snakeyaml"
     ],
-    "https://repo.maven.apache.org/maven2/": [
+    "https://repo1.maven.org/maven2/": [
       "biz.aQute.bnd:biz.aQute.bnd.util",
       "biz.aQute.bnd:biz.aQute.bndlib",
       "com.google.auto.value:auto-value-annotations",
