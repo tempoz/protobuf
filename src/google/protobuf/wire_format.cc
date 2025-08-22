@@ -529,8 +529,13 @@ bool WireFormat::ParseAndMergeField(
             return false;
           }
         } else {
-          VerifyUTF8StringNamedField(value.data(), value.length(), PARSE,
-                                     field->full_name());
+          const auto& data = value.data();
+          const auto& length = value.length();
+          const auto& fullName = field->full_name();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+          VerifyUTF8StringNamedField(data, length, PARSE, fullName);
+#pragma GCC diagnostic pop
         }
         if (field->is_repeated()) {
           message_reflection->AddString(message, field, value);
@@ -1002,8 +1007,13 @@ const char* WireFormat::_InternalParseAndMergeField(
             return nullptr;
           }
         } else {
-          VerifyUTF8StringNamedField(value.data(), value.length(), PARSE,
-                                     field->full_name());
+          const auto& data = value.data();
+          const auto& length = value.length();
+          const auto& fullName = field->full_name();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+          VerifyUTF8StringNamedField(data, length, PARSE, fullName);
+#pragma GCC diagnostic pop
         }
       }
       if (field->is_repeated()) {
@@ -1395,8 +1405,13 @@ uint8_t* WireFormat::InternalSerializeField(const FieldDescriptor* field,
                                            WireFormatLite::SERIALIZE,
                                            field->full_name());
         } else {
-          VerifyUTF8StringNamedField(value.data(), value.length(), SERIALIZE,
-                                     field->full_name());
+          const auto& data = value.data();
+          const auto& length = value.length();
+          const auto& fullName = field->full_name();
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+          VerifyUTF8StringNamedField(data, length, SERIALIZE, fullName);
+#pragma GCC diagnostic pop
         }
         target = stream->WriteString(field->number(), value, target);
         break;
