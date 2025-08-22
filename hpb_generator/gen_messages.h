@@ -12,7 +12,6 @@
 #include "google/protobuf/descriptor.h"
 
 namespace google::protobuf::hpb_generator {
-namespace protobuf = ::proto2;
 
 void WriteMessageClassDeclarations(
     const protobuf::Descriptor* descriptor,

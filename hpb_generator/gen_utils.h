@@ -18,8 +18,6 @@
 
 namespace google::protobuf::hpb_generator {
 
-namespace protobuf = ::proto2;
-
 enum class MessageClassType {
   kMessage,
   kMessageCProxy,

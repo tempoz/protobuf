@@ -27,7 +27,6 @@
 
 namespace google::protobuf::hpb_generator {
 
-namespace protobuf = ::proto2;
 using Sub = protobuf::io::Printer::Sub;
 
 void WriteModelAccessDeclaration(const protobuf::Descriptor* descriptor,

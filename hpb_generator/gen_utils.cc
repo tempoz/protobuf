@@ -27,8 +27,6 @@ std::string EscapeTrigraphs(absl::string_view to_escape) {
 
 namespace google::protobuf::hpb_generator {
 
-namespace protobuf = ::proto2;
-
 void AddEnums(const protobuf::Descriptor* message,
               std::vector<const protobuf::EnumDescriptor*>* enums) {
   enums->reserve(enums->size() + message->enum_type_count());

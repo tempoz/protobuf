@@ -19,7 +19,6 @@
 namespace google::protobuf::hpb_generator {
 
 namespace protoc = ::google::protobuf::compiler;
-namespace protobuf = ::proto2;
 using FileDescriptor = ::google::protobuf::FileDescriptor;
 using google::protobuf::Edition;
 

@@ -13,8 +13,6 @@
 
 namespace google::protobuf::hpb_generator {
 
-namespace protobuf = ::proto2;
-
 void WriteExtensionIdentifiersHeader(
     const std::vector<const protobuf::FieldDescriptor*>& extensions,
     Context& ctx);

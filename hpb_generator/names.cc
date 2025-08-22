@@ -16,7 +16,6 @@
 #include "hpb_generator/keywords.h"
 
 namespace google::protobuf::hpb_generator {
-namespace protobuf = ::proto2;
 
 namespace {
 

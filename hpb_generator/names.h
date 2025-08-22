@@ -15,8 +15,6 @@
 
 namespace google::protobuf::hpb_generator {
 
-namespace protobuf = ::proto2;
-
 inline constexpr absl::string_view kNoPackageNamePrefix = "hpb_";
 
 std::string ClassName(const protobuf::Descriptor* descriptor);

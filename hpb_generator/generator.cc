@@ -27,7 +27,6 @@
 namespace google::protobuf::hpb_generator {
 namespace {
 
-namespace protobuf = ::proto2;
 using FileDescriptor = ::google::protobuf::FileDescriptor;
 
 void WriteTypedefForwardingHeader(

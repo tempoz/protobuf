@@ -13,8 +13,6 @@
 
 namespace google::protobuf::hpb_generator {
 
-namespace protobuf = ::proto2;
-
 std::string EnumTypeName(const protobuf::EnumDescriptor* enum_descriptor);
 std::string EnumValueSymbolInNameSpace(
     const protobuf::EnumDescriptor* desc,
